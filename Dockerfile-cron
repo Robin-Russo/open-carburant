@@ -1,0 +1,20 @@
+FROM php:latest
+
+RUN apt-get update && apt-get install -y cron && rm -rf /var/lib/apt
+
+RUN apt-get update && apt-get install -y mysql-client && rm -rf /var/lib/apt
+RUN apt-get update && apt-get install -y zip unzip && rm -rf /var/lib/apt
+
+RUN apt-get update && \
+    apt-get install -y libzip-dev && \
+    docker-php-ext-install zip mysqli
+
+COPY crontab.conf /root
+RUN crontab /root/crontab.conf
+
+#COPY timezone /etc/timezone
+#COPY environment /etc/environment
+#COPY rcS /etc/default/rcS
+
+# Run the command on container startup
+CMD cron -f -L 15

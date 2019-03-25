@@ -1,0 +1,74 @@
+OPENDATA-CARBURANT
+
+Objectifs
+    Traiter des fichiers XML de gros volume
+    Lire des flux de données opendata
+    Nouvelles fonctions MySQL
+    Taches automatisées en PHP
+
+Plan
+    ** Partie 1 - Backend
+    Analyse du fichier XML
+    Lecture directe XML dans zip
+    création MCD
+    Mise à jour differentielle de la BDD
+    Lecture des flux de données HTTP
+    Automatisation des taches
+    Logging / Admin
+    Backup
+
+    ** Partie 2 - Frontend
+    Création du template Bootstrap
+    Choix techno du framework
+    Geolocation API: Localisation du navigateur
+    Création API: endpoint code_postal, liste_stations, tarifs...
+    Javascript/AJAX: Mise à jour du DOM
+    Sauvegarde des recherches utilisateur avec cookies
+    RGPD
+    MJML: mailinglist notification MAJ des prix sur recherches enregistrées
+    Newsletter avec courbes de variation de prix sur recherches
+    Analyse traffic
+    Administration
+    Backup
+
+Opendata
+https://www.prix-carburants.gouv.fr/rubrique/opendata/
+
+site gouv.fr
+https://www.prix-carburants.gouv.fr/
+
+autres sites:
+https://mon-essence.fr/
+https://carbu.com/france/
+https://www.station-essence.com/
+...
+
+
+Calcul distances en lat/long
+https://www.lexilogos.com/calcul_distances.htm
+
+//calcul de la distance 3D conçue par partir-en-vtt.com
+function distance($lat1, $lon1, $lat2, $lon2, $alt1, $alt2)
+	{
+		//rayon de la terre
+		$r = 6366;
+		$lat1 = deg2rad($lat1);
+		$lat2 = deg2rad($lat2);
+		$lon1 = deg2rad($lon1);
+		$lon2 = deg2rad($lon2);
+
+		//recuperation altitude en km
+		$alt1 = $alt1/1000;
+		$alt2 = $alt2/1000;
+
+		//calcul précis
+		$dp= 2 * asin(sqrt(pow (sin(($lat1-$lat2)/2) , 2) + cos($lat1)*cos($lat2)* pow( sin(($lon1-$lon2)/2) , 2)));
+
+		//sortie en km
+		$d = $dp * $r;
+
+		//Pythagore a dit que :
+		 $h = sqrt(pow($d,2)+pow($alt2-$alt1,2));
+
+		return $h;
+	}

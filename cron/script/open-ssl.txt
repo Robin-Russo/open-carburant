@@ -1,0 +1,7 @@
+SUMMARIZING: If you're also on Windows (and using Wamp64 or similar), do this:
+
+    Open https://curl.haxx.se/ca/cacert.pem and save the cacert.pem to a path like "C:\wamp64\extras\cacert.pem" - beware to not allow Windows save it like "cacert.pem.txt";
+    Open your php.ini, and locate the "curl.cainfo" line, which should be more or less the line 1859. Update it to (whitout the ; in the beginning too):
+    curl.cainfo="C:\wamp64\extras\cacert.pem"
+
+    Restart the services and voilá.

@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+
+   dbserver:
+      image: mariadb
+      container_name: oc_mariadb
+      volumes:
+         - dbdata_opencarburant:/var/lib/mysql
+      restart: always
+      environment:
+         MYSQL_ROOT_PASSWORD: pass*1234
+         MYSQL_DATABASE: opencarburant
+         MYSQL_USER: opencarburant_user
+         MYSQL_PASSWORD: pass*9876
+
+   webserver:
+     depends_on:
+       - dbserver
+     container_name: oc_webserver
+     build: .
+     volumes:
+       - ./html:/var/www/html:rw
+     ports:
+       - "8010:80"
+     restart: always
+     environment:
+         MYSQL_DB_HOST: dbserver:3306
+
+   cron:
+     depends_on:
+       - dbserver
+     container_name: oc_cron
+     build:
+       context: .
+       dockerfile: Dockerfile-cron
+     volumes:
+       - ./cron:/cron
+       - ./html:/html
+     restart: always
+     environment:
+       MYSQL_DB_HOST: db:3306
+
+   adminer:
+     image: adminer
+     container_name: oc_adminer
+     restart: always
+     ports:
+       - 8011:8080
+
+volumes:
+    dbdata_opencarburant:

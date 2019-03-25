@@ -1,0 +1,4 @@
+/cron/input/*.zip
+/cron/input/*.json
+/cron/log/*.log
+*.old
