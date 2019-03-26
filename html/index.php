@@ -1,10 +1,13 @@
+<?php
+
+echo '
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>Page Title</title>
+        <title>Prix carburant</title>
     </head>
     <body>
-        <h1>Hello world</h1>
+        <h1>Le prix du carburant dans votre commune</h1>
     </body>
-</html>
+</html>';

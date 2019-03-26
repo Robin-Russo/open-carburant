@@ -12,9 +12,5 @@ RUN apt-get update && \
 COPY crontab.conf /root
 RUN crontab /root/crontab.conf
 
-#COPY timezone /etc/timezone
-#COPY environment /etc/environment
-#COPY rcS /etc/default/rcS
-
 # Run the command on container startup
 CMD cron -f -L 15
