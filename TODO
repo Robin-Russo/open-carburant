@@ -1,0 +1,5 @@
+- Mauvais enregistrement caracteres accentues dans db xml_mirror
+- Clean du dossier input au bout de 24h
+- parse-xml Erreur duplicate entry primary key
+- Effacer les fichiers json après traitement
+- Faire POC du frontend
