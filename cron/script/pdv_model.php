@@ -116,7 +116,7 @@ function insertPdv($aData)
 
     if (!$result = $mysqli->query($sQuery)) {
         logMessage(sprintf("Erreur MySQL (%s): %s", $mysqli->errno, $mysqli->error));
-        echo("query: ".$sQuery);
+        logMessage("query: ".$sQuery);
         exit(1);
     }
 
@@ -143,7 +143,7 @@ function updatePdv($aData)
 
     if (!$result = $mysqli->query($sQuery)) {
         logMessage(sprintf("Erreur MySQL (%s): %s", $mysqli->errno, $mysqli->error));
-        echo("query: ".$sQuery);
+        logMessage("query: ".$sQuery);
         exit(1);
     }
 
@@ -175,7 +175,7 @@ function insertPdvPrix($aData)
 
     if (!$result = $mysqli->query($sQuery)) {
         logMessage(sprintf("Erreur MySQL (%s): %s", $mysqli->errno, $mysqli->error));
-        echo("query: ".$sQuery);
+        logMessage("query: ".$sQuery);
         exit(1);
     }
 
@@ -199,7 +199,7 @@ function existPdvPrix($aData)
 
     if (!$result = $mysqli->query($sQuery)) {
         logMessage(sprintf("Erreur MySQL (%s): %s", $mysqli->errno, $mysqli->error));
-        echo("query: ".$sQuery);
+        logMessage("query: ".$sQuery);
         exit(1);
     }
 

@@ -5,13 +5,15 @@ function logMessage($sMessage)
     global $argv;
 
     // 20190323 00:43:15 get-flux.php downloading https://donnees.roulez-eco.fr/opendata/jour
-    $sLogTemplate = "%s, %s, %s\n";
+    $sLogTemplate = "\n%s, %s, %s";
     echo sprintf($sLogTemplate, date("Ymd H:i:s"), basename($argv[0]), $sMessage);
 
 }
 
 function setConfiguration()
 {
+    date_default_timezone_set('Europe/Paris');
+
     define('BASE_PATH', '/cron');
 
     define('DB_HOST', "dbserver" );
@@ -19,6 +21,52 @@ function setConfiguration()
     define('DB_USER', "opencarburant_user" );
     define('DB_PASSWORD', "pass*9876" );
 
+}
+
+function cleanDirectory( $inDirectory, $inJour, $aExtension )
+{
+
+	$nNow = time();
+
+	$aDir = scandir($inDirectory);
+	foreach( $aDir as $sFile) {
+        foreach ($aExtension as $sExtension) {
+            $sExtension = '.' . $sExtension;
+            $nLen = strlen($sExtension) * -1;
+
+            if ( (substr($sFile, $nLen) == $sExtension ) ) {
+    			$nTime = filectime( $inDirectory . $sFile );
+    			$nbJours = ($nNow - $nTime) / 86400;
+
+    			if ($nbJours >= $inJour ) {
+    				unlink($inDirectory . $sFile);
+    				logMessage( sprintf('cleanDirectory("%s") : Fichier %s effacé', $inDirectory, $sFile) );
+    			}
+    		}
+
+        }
+	}
+}
+
+function getDirSize( $inPath )
+{
+	$aReturn = array();
+
+	exec( "du -k ".$inPath." | awk '{print $1}'", $aReturn );
+	$nSizeDir = intval( $aReturn[0] );
+
+	return($nSizeDir);
+}
+
+
+function getNbFiles( $inPath )
+{
+	$aReturn = array();
+
+	exec( "ls ".$inPath. " | wc -l", $aReturn );
+	$nFiles = intval($aReturn[0]);
+
+	return($nFiles);
 }
 
 function callback_dump( $func_name, $func_args )

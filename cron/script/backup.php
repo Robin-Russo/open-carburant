@@ -1,13 +1,18 @@
 <?php
 require("commun.php");
 
-logMessage("\nDébut de traitement");
+logMessage("Début de traitement");
 setConfiguration();
+
+cleanDirectory( BASE_PATH."/backup/", 2, ['gz'] );
 
 dumpDatabase(DB_DATABASE);
 
 targzDirectory("/cron/script");
 targzDirectory("/html");
+
+$sDirSummary = "Répertoire backup : %s fichiers. Espace disque : %s Ko";
+logMessage( sprintf( $sDirSummary, getNbFiles( BASE_PATH."/backup/" ), getDirSize( BASE_PATH."/backup/" ) ) );
 
 logMessage("Fin de traitement");
 exit(0);

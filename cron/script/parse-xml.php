@@ -21,6 +21,8 @@ if (!$result = $mysqli->query("TRUNCATE TABLE xml_mirror ")) {
 }
 */
 
+cleanDirectory( BASE_PATH."/input/", 2, ['zip','json'] );
+
 $aInput = inputFileList();
 
 foreach($aInput as $sInputJson) {
