@@ -9,5 +9,6 @@ echo '
     </head>
     <body>
         <h1>Le prix du carburant dans votre commune</h1>
+        <input type="button" value="Je ne fais rien mais j\'existe">
     </body>
 </html>';
